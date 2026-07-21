@@ -9,15 +9,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cinzel:wght@400;600;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Dark Gothic Palette */
             --rojo-sangre: #8B1A1A;
             --rojo-viejo: #5C1A1A;
             --púrpura-nocturno: #4B1F3A;
             --dorado-oscuro: #C9A66B;
             --plata-antigua: #A8A8A8;
             --texto-niebla: #E8E0D8;
-            --fondo-contenedor: rgba(25, 25, 25, 0.85);
-            --fondo-lista: rgba(35, 25, 30, 0.7);
+            --fondo-contenedor: rgba(25, 25, 25, 0.88);
+            --fondo-lista: rgba(35, 25, 30, 0.75);
             --borde-gótico: #3A1F1F;
         }
 
@@ -50,7 +49,6 @@
             box-sizing: border-box;
             position: relative;
             z-index: 10;
-            overflow: hidden;
         }
 
         .vanity-container::before {
@@ -92,7 +90,6 @@
             letter-spacing: 1px;
         }
 
-        /* INSPIRATION SECTION */
         .inspo-section {
             border: 1px dashed var(--rojo-viejo);
             border-radius: 6px;
@@ -133,7 +130,6 @@
             display: none;
         }
 
-        /* PRODUCTS ACCORDION */
         .category {
             margin-bottom: 12px;
             border: 1px solid var(--borde-gótico);
@@ -185,10 +181,8 @@
             width: 16px;
             height: 16px;
             cursor: pointer;
-            filter: brightness(0.9);
         }
 
-        /* FINAL BUTTON & NOTIFICATIONS */
         .submit-btn {
             width: 100%;
             background: linear-gradient(to bottom, var(--rojo-sangre), var(--rojo-viejo));
@@ -210,7 +204,6 @@
         .submit-btn:hover {
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 10px 30px rgba(139, 26, 26, 0.6);
-            background: linear-gradient(to bottom, #A21F1F, #6B1414);
         }
 
         .notification {
@@ -243,7 +236,6 @@
             border-color: var(--dorado-oscuro);
         }
 
-        /* GOTHIC FIREWORKS */
         .fireworks-container {
             position: fixed;
             top: 50%;
@@ -268,7 +260,6 @@
             opacity: 0;
             transition: opacity 0.5s ease-in-out, transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
             transform: scale(0.4) rotate(8deg);
-            filter: contrast(1.1) brightness(0.95);
         }
 
         #fw1, #fw2, #fw3 { top: 0; left: 0; right: 0; bottom: 0; margin: auto; }
@@ -284,16 +275,9 @@
             background: var(--rojo-viejo); 
             border-radius: 10px; 
         }
-
-        /* Gothic details */
-        .category-header span:last-child {
-            font-size: 18px;
-            transition: transform 0.3s;
-        }
     </style>
 </head>
 <body>
-    <!-- Contenedor de Efectos Oscuros -->
     <div class="fireworks-container">
         <img src="https://i.postimg.cc/1XfX0byT/Find-Share-on-GIPHY.gif" class="firework" id="fw1">
         <img src="https://i.postimg.cc/nLhXcXNw/2674081026469214.gif" class="firework" id="fw2">
@@ -304,90 +288,86 @@
         <h1>ALTAR NOCTURNO</h1>
         <div class="subtitle">Invoca tu ritual de belleza eterna</div>
      
-        <!-- Inspo Upload -->
         <label class="inspo-section" id="inspoLabel">
             <span class="upload-btn">🕯️ Capturar Visión Oscura</span>
             <input type="file" id="inspoInput" accept="image/*">
             <img id="inspoPreview" src="" alt="Tu inspiración">
         </label>
      
-        <!-- Categories Container -->
         <div id="catalog"></div>
      
-        <!-- Submit -->
         <button class="submit-btn" onclick="finishRoutine()">🖤 SELLAR EL RITUAL</button>
     
-        <!-- Notificación Gótica -->
         <div id="notificationArea" class="notification"></div>
     </div>
 
     <script>
         const skincareData = {
             "🩸 Limpiadores": [
-                "Aceite purificador de sangre",
-                "Bálsamo desmaquillante nocturno",
-                "Agua micelar embrujada",
-                "Gel limpiador de sombras",
-                "Espuma de medianoche",
-                "Crema limpiadora vampírica",
-                "Leche purificadora",
-                "Jabón de cenizas",
+                "Limpiador en aceite",
+                "Bálsamo desmaquillante",
+                "Agua micelar",
+                "Gel limpiador",
+                "Espuma limpiadora",
+                "Limpiador en crema",
+                "Limpiador en leche",
+                "Jabón facial en barra",
                 "Limpiador con ácido salicílico",
-                "Polvo enzimático ancestral"
+                "Limpiador en polvo enzimático"
             ],
             "🌑 Tónicos y Esencias": [
-                "Tónico de luna llena",
-                "Tónico calmante de ceniza",
-                "Tónico exfoliante AHA",
-                "Tónico exfoliante BHA",
+                "Tónico hidratante",
+                "Tónico calmante",
+                "Tónico exfoliante (AHA)",
+                "Tónico exfoliante (BHA)",
                 "Tónico con PHA",
-                "Esencia de rosas marchitas",
-                "Esencia fermentada oscura",
-                "Niebla nocturna",
-                "Bruma de cementerio",
-                "Agua termal de obsidiana"
+                "Esencia hidratante",
+                "Esencia fermentada",
+                "Mist facial",
+                "Bruma refrescante",
+                "Agua termal"
             ],
             "✦ Sérums": [
-                "Sérum de sangre de dragón (vitamina C)",
+                "Sérum de vitamina C",
                 "Sérum de niacinamida",
                 "Sérum de ácido hialurónico",
-                "Sérum de retinol prohibido",
+                "Sérum de retinol",
                 "Sérum de retinal",
                 "Sérum de bakuchiol",
-                "Sérum de veneno de araña (péptidos)",
+                "Sérum de péptidos",
                 "Sérum de ceramidas",
-                "Sérum con centella maldita",
-                "Sérum calmante de tumba",
+                "Sérum con centella asiática",
+                "Sérum calmante",
                 "Sérum antioxidante",
-                "Sérum iluminador de luna",
+                "Sérum iluminador",
                 "Sérum antiacné",
-                "Sérum para manchas eternas",
+                "Sérum para manchas",
                 "Sérum reafirmante",
                 "Sérum antiarrugas",
                 "Sérum con colágeno",
-                "Sérum reparador de almas",
+                "Sérum reparador",
                 "Sérum con ácido tranexámico",
-                "Sérum con cafeína de medianoche"
+                "Sérum con cafeína"
             ],
             "🪦 Cremas e Hidratantes": [
-                "Crema de niebla ligera",
-                "Crema intensa de sepulcro",
-                "Gel de cripta",
+                "Crema hidratante ligera",
+                "Crema hidratante intensa",
+                "Gel hidratante",
                 "Crema con ceramidas",
-                "Crema nutritiva oscura",
+                "Crema nutritiva",
                 "Crema reparadora",
                 "Crema antiarrugas",
                 "Crema reafirmante",
-                "Crema iluminadora de luna",
-                "Sleeping mask de terciopelo",
+                "Crema iluminadora",
+                "Sleeping mask",
                 "Crema oil-free",
                 "Crema matificante",
-                "Crema para pieles sensibles",
-                "Emulsión espectral",
-                "Loción de sombras"
+                "Crema para piel sensible",
+                "Emulsión facial",
+                "Loción hidratante"
             ],
             "👁️ Contorno de ojos": [
-                "Contorno de niebla eterna",
+                "Contorno hidratante",
                 "Contorno con cafeína",
                 "Contorno con retinol",
                 "Contorno iluminador",
@@ -397,12 +377,12 @@
                 "Mascarilla para ojos"
             ],
             "💀 Labios": [
-                "Bálsamo de sangre",
+                "Bálsamo labial",
                 "Mascarilla nocturna para labios",
-                "Exfoliante de huesos",
+                "Exfoliante labial",
                 "Aceite para labios",
                 "Protector labial con SPF",
-                "Tratamiento reparador"
+                "Tratamiento reparador para labios"
             ],
             "☀️ Protección solar": [
                 "Protector solar en crema",
@@ -415,14 +395,14 @@
                 "Protector solar en cushion"
             ],
             "🕸️ Mascarillas": [
-                "Mascarilla de arcilla antigua",
+                "Mascarilla de arcilla",
                 "Mascarilla hidratante",
                 "Mascarilla calmante",
                 "Mascarilla iluminadora",
                 "Mascarilla exfoliante",
-                "Sheet mask de seda negra",
+                "Sheet mask",
                 "Mascarilla de carbón",
-                "Mascarilla de miel oscura",
+                "Mascarilla de miel",
                 "Mascarilla nocturna",
                 "Mascarilla de colágeno",
                 "Bubble mask"
@@ -436,11 +416,11 @@
                 "Peeling líquido"
             ],
             "🕯️ Tratamientos especiales": [
-                "Aceite facial maldito",
-                "Ampolla de elixir",
-                "Spot treatment para maldiciones",
+                "Aceite facial",
+                "Ampolla facial",
+                "Spot treatment para granitos",
                 "Corrector de manchas",
-                "Primer de sombras",
+                "Primer hidratante para skincare",
                 "Booster facial"
             ]
         };
@@ -467,7 +447,6 @@
          
             header.onclick = () => {
                 let isOpen = productList.style.display === "block";
-             
                 document.querySelectorAll('.product-list').forEach(p => p.style.display = 'none');
                 document.querySelectorAll('.category-header span:last-child').forEach(s => s.textContent = '+');
             
@@ -499,7 +478,6 @@
             }
         });
 
-        // Configuración de efectos
         const fw1 = document.getElementById('fw1');
         const fw2 = document.getElementById('fw2');
         const fw3 = document.getElementById('fw3');
@@ -507,14 +485,11 @@
      
         function lanzarFuegosArtificiales() {
             limpiarFuegos();
-        
             fw1.classList.add('active');
-        
             fw23Timeout = setTimeout(() => {
                 fw2.classList.add('active');
                 fw3.classList.add('active');
             }, 600);
-         
             clearFwTimeout = setTimeout(() => {
                 limpiarFuegos();
             }, 4500);
@@ -540,7 +515,6 @@
             } else {
                 notifyArea.classList.add("notify-success");
                 notifyArea.innerHTML = `🖤 Hermosa criatura. Has elegido ${checkedItems} elementos para tu ritual.`;
-            
                 lanzarFuegosArtificiales();
             
                 setTimeout(() => {
