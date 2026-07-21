@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Altar Nocturno</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cinzel:wght@400;600;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Dark Gothic Palette */
+            --rojo-sangre: #8B1A1A;
+            --rojo-viejo: #5C1A1A;
+            --púrpura-nocturno: #4B1F3A;
+            --dorado-oscuro: #C9A66B;
+            --plata-antigua: #A8A8A8;
+            --texto-niebla: #E8E0D8;
+            --fondo-contenedor: rgba(25, 25, 25, 0.85);
+            --fondo-lista: rgba(35, 25, 30, 0.7);
+            --borde-gótico: #3A1F1F;
+        }
+
+        body {
+            background-color: #191919;
+            color: var(--texto-niebla);
+            font-family: 'Cinzel', serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(139, 26, 26, 0.08) 0%, transparent 70%),
+                linear-gradient(180deg, #191919 0%, #120F0F 100%);
+        }
+
+        .vanity-container {
+            background: var(--fondo-contenedor);
+            backdrop-filter: blur(12px);
+            border: 2px solid var(--borde-gótico);
+            border-image: linear-gradient(to bottom, var(--rojo-sangre), transparent) 1;
+            border-radius: 8px;
+            padding: 30px 25px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 
+                0 0 40px rgba(139, 26, 26, 0.25),
+                inset 0 0 25px rgba(0, 0, 0, 0.6);
+            box-sizing: border-box;
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .vanity-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139,26,26,0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+            animation: subtlePulse 25s infinite alternate;
+        }
+
+        @keyframes subtlePulse {
+            0% { opacity: 0.6; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1.05); }
+        }
+
+        h1 {
+            font-family: 'UnifrakturCook', cursive;
+            color: var(--rojo-sangre);
+            text-align: center;
+            font-size: 32px;
+            margin: 0 0 8px 0;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(139, 26, 26, 0.7);
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-style: italic;
+            color: var(--plata-antigua);
+            margin-bottom: 30px;
+            font-size: 15px;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px;
+        }
+
+        /* INSPIRATION SECTION */
+        .inspo-section {
+            border: 1px dashed var(--rojo-viejo);
+            border-radius: 6px;
+            padding: 18px;
+            text-align: center;
+            margin-bottom: 25px;
+            background: var(--fondo-lista);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            display: block;
+            box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .inspo-section:hover {
+            border-color: var(--rojo-sangre);
+            background: rgba(75, 31, 58, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .inspo-section img {
+            max-width: 100%;
+            border-radius: 4px;
+            display: none;
+            margin-top: 15px;
+            box-shadow: 0 0 20px rgba(139, 26, 26, 0.5);
+            border: 1px solid var(--borde-gótico);
+        }
+
+        .upload-btn {
+            color: var(--dorado-oscuro);
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        /* PRODUCTS ACCORDION */
+        .category {
+            margin-bottom: 12px;
+            border: 1px solid var(--borde-gótico);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .category:hover {
+            border-color: var(--rojo-sangre);
+            box-shadow: 0 0 12px rgba(139, 26, 26, 0.3);
+        }
+
+        .category-header {
+            background: linear-gradient(to right, var(--púrpura-nocturno), #2A1A1A);
+            padding: 14px 18px;
+            font-weight: 600;
+            color: var(--dorado-oscuro);
+            cursor: pointer;
+            font-family: 'Playfair Display', serif;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 15px;
+            user-select: none;
+            border-bottom: 1px solid rgba(139, 26, 26, 0.2);
+        }
+
+        .product-list {
+            display: none;
+            padding: 12px 18px;
+            background: var(--fondo-lista);
+            max-height: 190px;
+            overflow-y: auto;
+        }
+
+        .product-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 13.5px;
+            cursor: pointer;
+            color: var(--texto-niebla);
+        }
+
+        .product-item input[type="checkbox"] {
+            accent-color: var(--rojo-sangre);
+            margin-right: 12px;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            filter: brightness(0.9);
+        }
+
+        /* FINAL BUTTON & NOTIFICATIONS */
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(to bottom, var(--rojo-sangre), var(--rojo-viejo));
+            color: #fff;
+            border: 1px solid #C9A66B;
+            padding: 16px;
+            border-radius: 4px;
+            font-family: 'UnifrakturCook', cursive;
+            font-size: 17px;
+            font-weight: 700;
+            margin-top: 25px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 6px 20px rgba(139, 26, 26, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(139, 26, 26, 0.6);
+            background: linear-gradient(to bottom, #A21F1F, #6B1414);
+        }
+
+        .notification {
+            margin-top: 18px;
+            padding: 14px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0;
+            display: none;
+            transition: all 0.5s ease;
+            border: 1px solid;
+        }
+
+        .notification.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .notify-error {
+            background: rgba(139, 26, 26, 0.15);
+            color: var(--rojo-sangre);
+            border-color: var(--rojo-viejo);
+        }
+
+        .notify-success {
+            background: rgba(201, 166, 107, 0.1);
+            color: var(--dorado-oscuro);
+            border-color: var(--dorado-oscuro);
+        }
+
+        /* GOTHIC FIREWORKS */
+        .fireworks-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            mix-blend-mode: screen;
+        }
+
+        .firework {
+            position: absolute;
+            width: 100%;
+            max-width: 650px;
+            height: 100%;
+            object-fit: contain;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            transform: scale(0.4) rotate(8deg);
+            filter: contrast(1.1) brightness(0.95);
+        }
+
+        #fw1, #fw2, #fw3 { top: 0; left: 0; right: 0; bottom: 0; margin: auto; }
+
+        .firework.active { 
+            opacity: 0.9; 
+            transform: scale(1.25) rotate(0deg); 
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { 
+            background: var(--rojo-viejo); 
+            border-radius: 10px; 
+        }
+
+        /* Gothic details */
+        .category-header span:last-child {
+            font-size: 18px;
+            transition: transform 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Contenedor de Efectos Oscuros -->
+    <div class="fireworks-container">
+        <img src="https://i.postimg.cc/1XfX0byT/Find-Share-on-GIPHY.gif" class="firework" id="fw1">
+        <img src="https://i.postimg.cc/nLhXcXNw/2674081026469214.gif" class="firework" id="fw2">
+        <img src="https://i.postimg.cc/8k6j5QXy/stars-changing-colors-gif-480-480-piksel.gif" class="firework" id="fw3">
+    </div>
+
+    <div class="vanity-container">
+        <h1>ALTAR NOCTURNO</h1>
+        <div class="subtitle">Invoca tu ritual de belleza eterna</div>
+     
+        <!-- Inspo Upload -->
+        <label class="inspo-section" id="inspoLabel">
+            <span class="upload-btn">🕯️ Capturar Visión Oscura</span>
+            <input type="file" id="inspoInput" accept="image/*">
+            <img id="inspoPreview" src="" alt="Tu inspiración">
+        </label>
+     
+        <!-- Categories Container -->
+        <div id="catalog"></div>
+     
+        <!-- Submit -->
+        <button class="submit-btn" onclick="finishRoutine()">🖤 SELLAR EL RITUAL</button>
+    
+        <!-- Notificación Gótica -->
+        <div id="notificationArea" class="notification"></div>
+    </div>
+
+    <script>
+        const skincareData = {
+            "🩸 Limpiadores": [
+                "Aceite purificador de sangre",
+                "Bálsamo desmaquillante nocturno",
+                "Agua micelar embrujada",
+                "Gel limpiador de sombras",
+                "Espuma de medianoche",
+                "Crema limpiadora vampírica",
+                "Leche purificadora",
+                "Jabón de cenizas",
+                "Limpiador con ácido salicílico",
+                "Polvo enzimático ancestral"
+            ],
+            "🌑 Tónicos y Esencias": [
+                "Tónico de luna llena",
+                "Tónico calmante de ceniza",
+                "Tónico exfoliante AHA",
+                "Tónico exfoliante BHA",
+                "Tónico con PHA",
+                "Esencia de rosas marchitas",
+                "Esencia fermentada oscura",
+                "Niebla nocturna",
+                "Bruma de cementerio",
+                "Agua termal de obsidiana"
+            ],
+            "✦ Sérums": [
+                "Sérum de sangre de dragón (vitamina C)",
+                "Sérum de niacinamida",
+                "Sérum de ácido hialurónico",
+                "Sérum de retinol prohibido",
+                "Sérum de retinal",
+                "Sérum de bakuchiol",
+                "Sérum de veneno de araña (péptidos)",
+                "Sérum de ceramidas",
+                "Sérum con centella maldita",
+                "Sérum calmante de tumba",
+                "Sérum antioxidante",
+                "Sérum iluminador de luna",
+                "Sérum antiacné",
+                "Sérum para manchas eternas",
+                "Sérum reafirmante",
+                "Sérum antiarrugas",
+                "Sérum con colágeno",
+                "Sérum reparador de almas",
+                "Sérum con ácido tranexámico",
+                "Sérum con cafeína de medianoche"
+            ],
+            "🪦 Cremas e Hidratantes": [
+                "Crema de niebla ligera",
+                "Crema intensa de sepulcro",
+                "Gel de cripta",
+                "Crema con ceramidas",
+                "Crema nutritiva oscura",
+                "Crema reparadora",
+                "Crema antiarrugas",
+                "Crema reafirmante",
+                "Crema iluminadora de luna",
+                "Sleeping mask de terciopelo",
+                "Crema oil-free",
+                "Crema matificante",
+                "Crema para pieles sensibles",
+                "Emulsión espectral",
+                "Loción de sombras"
+            ],
+            "👁️ Contorno de ojos": [
+                "Contorno de niebla eterna",
+                "Contorno con cafeína",
+                "Contorno con retinol",
+                "Contorno iluminador",
+                "Contorno antiarrugas",
+                "Gel para ojos",
+                "Parches de hidrogel",
+                "Mascarilla para ojos"
+            ],
+            "💀 Labios": [
+                "Bálsamo de sangre",
+                "Mascarilla nocturna para labios",
+                "Exfoliante de huesos",
+                "Aceite para labios",
+                "Protector labial con SPF",
+                "Tratamiento reparador"
+            ],
+            "☀️ Protección solar": [
+                "Protector solar en crema",
+                "Protector solar en gel",
+                "Protector solar en barra",
+                "Protector solar en spray",
+                "Protector solar con color",
+                "Protector solar mineral",
+                "Protector solar químico",
+                "Protector solar en cushion"
+            ],
+            "🕸️ Mascarillas": [
+                "Mascarilla de arcilla antigua",
+                "Mascarilla hidratante",
+                "Mascarilla calmante",
+                "Mascarilla iluminadora",
+                "Mascarilla exfoliante",
+                "Sheet mask de seda negra",
+                "Mascarilla de carbón",
+                "Mascarilla de miel oscura",
+                "Mascarilla nocturna",
+                "Mascarilla de colágeno",
+                "Bubble mask"
+            ],
+            "⚰️ Exfoliantes": [
+                "Exfoliante físico suave",
+                "Exfoliante químico AHA",
+                "Exfoliante químico BHA",
+                "Exfoliante PHA",
+                "Peeling enzimático",
+                "Peeling líquido"
+            ],
+            "🕯️ Tratamientos especiales": [
+                "Aceite facial maldito",
+                "Ampolla de elixir",
+                "Spot treatment para maldiciones",
+                "Corrector de manchas",
+                "Primer de sombras",
+                "Booster facial"
+            ]
+        };
+
+        const catalogDiv = document.getElementById("catalog");
+     
+        for (const [category, products] of Object.entries(skincareData)) {
+            let catDiv = document.createElement("div");
+            catDiv.className = "category";
+         
+            let header = document.createElement("div");
+            header.className = "category-header";
+            header.innerHTML = `<span>${category}</span> <span>+</span>`;
+        
+            let productList = document.createElement("div");
+            productList.className = "product-list";
+         
+            products.forEach(prod => {
+                let label = document.createElement("label");
+                label.className = "product-item";
+                label.innerHTML = `<input type="checkbox" value="${prod}"> <span>${prod}</span>`;
+                productList.appendChild(label);
+            });
+         
+            header.onclick = () => {
+                let isOpen = productList.style.display === "block";
+             
+                document.querySelectorAll('.product-list').forEach(p => p.style.display = 'none');
+                document.querySelectorAll('.category-header span:last-child').forEach(s => s.textContent = '+');
+            
+                if (!isOpen) {
+                    productList.style.display = "block";
+                    header.querySelector('span:last-child').textContent = '−';
+                }
+            };
+         
+            catDiv.appendChild(header);
+            catDiv.appendChild(productList);
+            catalogDiv.appendChild(catDiv);
+        }
+
+        const inspoInput = document.getElementById('inspoInput');
+        const inspoPreview = document.getElementById('inspoPreview');
+        const uploadBtn = document.querySelector('.upload-btn');
+     
+        inspoInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    inspoPreview.src = e.target.result;
+                    inspoPreview.style.display = 'block';
+                    uploadBtn.textContent = '🕯️ Cambiar Visión';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Configuración de efectos
+        const fw1 = document.getElementById('fw1');
+        const fw2 = document.getElementById('fw2');
+        const fw3 = document.getElementById('fw3');
+        let fw23Timeout, clearFwTimeout;
+     
+        function lanzarFuegosArtificiales() {
+            limpiarFuegos();
+        
+            fw1.classList.add('active');
+        
+            fw23Timeout = setTimeout(() => {
+                fw2.classList.add('active');
+                fw3.classList.add('active');
+            }, 600);
+         
+            clearFwTimeout = setTimeout(() => {
+                limpiarFuegos();
+            }, 4500);
+        }
+     
+        function limpiarFuegos() {
+            clearTimeout(fw23Timeout);
+            clearTimeout(clearFwTimeout);
+            fw1.classList.remove('active');
+            fw2.classList.remove('active');
+            fw3.classList.remove('active');
+        }
+     
+        function finishRoutine() {
+            let checkedItems = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            let notifyArea = document.getElementById("notificationArea");
+        
+            notifyArea.className = "notification show";
+        
+            if (checkedItems === 0) {
+                notifyArea.classList.add("notify-error");
+                notifyArea.innerHTML = "🌑 La oscuridad susurra: Aún no has elegido ningún elixir...";
+            } else {
+                notifyArea.classList.add("notify-success");
+                notifyArea.innerHTML = `🖤 Hermosa criatura. Has elegido ${checkedItems} elementos para tu ritual.`;
+            
+                lanzarFuegosArtificiales();
+            
+                setTimeout(() => {
+                    document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+                    notifyArea.classList.remove("show");
+                }, 4500);
+            }
+        }
+    </script>
+</body>
+</html>
